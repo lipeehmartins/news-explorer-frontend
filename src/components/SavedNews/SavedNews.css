@@ -1,0 +1,15 @@
+.saved-news {
+  min-height: calc(100vh - 160px);
+}
+
+.saved-news__content {
+  padding: 24px 16px 80px;
+}
+
+.saved-news__empty {
+  max-width: 500px;
+  margin: 48px auto;
+  text-align: center;
+  font-size: 18px;
+  color: #1a1b22;
+}

@@ -71,7 +71,7 @@
   filter: brightness(0) invert(1);
 }
 
-.navigation__link_active {
+.navigation__link_state_active {
   border-bottom-color: #1a1b22;
 }
 
@@ -84,7 +84,7 @@
   border-color: #fff;
 }
 
-.header_theme_home .navigation__link_active {
+.header_theme_home .navigation__link_state_active {
   border-bottom-color: #fff;
 }
 
@@ -243,7 +243,7 @@
     font-weight: 500;
   }
 
-  .navigation__mobile-panel .navigation__link_active {
+  .navigation__mobile-panel .navigation__link_state_active {
     border-bottom: 0;
   }
 

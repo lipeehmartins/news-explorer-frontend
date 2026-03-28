@@ -1,0 +1,142 @@
+.main {
+  min-height: calc(100vh - 160px);
+}
+
+.main__intro {
+  width: 100%;
+  max-width: 1440px;
+  height: 576px;
+  margin: 0 auto;
+  padding: 0 16px;
+  background-image:
+    linear-gradient(0deg, rgba(26, 27, 34, 0.5), rgba(26, 27, 34, 0.5)),
+    url("../../assets/main-intro-background.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 1;
+  color: #fff;
+  text-align: initial;
+}
+
+.main__intro-content {
+  width: 100%;
+  max-width: 608px;
+  margin: 0 auto;
+  padding-bottom: 80px;
+}
+
+.main__title {
+  width: 100%;
+  max-width: 608px;
+  min-height: 0;
+  margin: 0 0 32px;
+  font-family: "Roboto Slab", "Times New Roman", serif;
+  font-weight: 400;
+  font-size: 60px;
+  line-height: 64px;
+  color: #fff;
+}
+
+.main__subtitle {
+  max-width: 608px;
+  min-height: 0;
+  margin: 0 0 64px;
+  font-family: "Roboto", Arial, sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.main__results {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 72px 16px 80px;
+}
+
+.main__results-title {
+  margin: 0 0 32px;
+  color: #1a1b22;
+}
+
+.main__feedback {
+  margin: 24px auto 0;
+  max-width: 640px;
+  text-align: center;
+  font-size: 18px;
+  color: #1a1b22;
+}
+
+.main__feedback_type_error {
+  color: #d93025;
+}
+
+@media (min-width: 701px) and (max-width: 900px) {
+  .main__intro {
+    height: auto;
+    min-height: 420px;
+    padding: 0;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .main__intro-content {
+    max-width: none;
+    margin: 0;
+    padding-top: 38px;
+    padding-bottom: 48px;
+  }
+
+  .main__title {
+    width: 425px;
+    margin: 0 180px 16px 160px;
+    font-size: 36px;
+    line-height: 40px;
+    max-width: none;
+  }
+
+  .main__subtitle {
+    width: 452px;
+    margin: 0 156px 48px 160px;
+    font-size: 18px;
+    line-height: 24px;
+    max-width: none;
+  }
+
+  .main__results {
+    padding-top: 48px;
+  }
+}
+
+@media (max-width: 700px) {
+  .main__intro {
+    min-height: 536px;
+    height: auto;
+    padding: 0;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .main__intro-content {
+    max-width: none;
+    margin: 0;
+    padding-top: 30px;
+    padding-bottom: 32px;
+  }
+
+  .main__title {
+    width: 285px;
+    margin: 0 16px 11.56px 19px;
+    max-width: none;
+    font-size: 36px;
+    line-height: 40px;
+  }
+
+  .main__subtitle {
+    width: 288px;
+    margin: 0 16px 86.44px 16px;
+    max-width: none;
+    font-size: 18px;
+    line-height: 24px;
+  }
+}

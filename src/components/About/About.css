@@ -1,0 +1,17 @@
+.about {
+  background: #fff;
+  border-top: 1px solid #d1d2d6;
+  padding: 48px 16px;
+}
+
+.about__title {
+  margin: 0 0 16px;
+  color: #1a1b22;
+}
+
+.about__text {
+  margin: 0;
+  max-width: 800px;
+  line-height: 1.5;
+  color: #1a1b22;
+}

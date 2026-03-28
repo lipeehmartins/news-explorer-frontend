@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import PopupWithForm from '../PopupWithForm/PopupWithForm';
+import { useState } from "react";
+import PopupWithForm from "../PopupWithForm/PopupWithForm";
 
 function Register({ isOpen, onClose, onSubmit, onSwitchToLogin }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -19,14 +19,18 @@ function Register({ isOpen, onClose, onSubmit, onSwitchToLogin }) {
       isOpen={isOpen}
       onClose={onClose}
       title="Cadastre-se"
-      footer={(
+      footer={
         <p className="popup__footer-text">
-          ou{' '}
-          <button className="popup__footer-link" type="button" onClick={onSwitchToLogin}>
+          ou{" "}
+          <button
+            className="popup__footer-link"
+            type="button"
+            onClick={onSwitchToLogin}
+          >
             Entrar
           </button>
         </p>
-      )}
+      }
     >
       <form className="popup__form" onSubmit={handleSubmit}>
         <label className="popup__label" htmlFor="register-email">
@@ -36,6 +40,7 @@ function Register({ isOpen, onClose, onSubmit, onSwitchToLogin }) {
           id="register-email"
           className="popup__input"
           type="email"
+          autoComplete="email"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
           placeholder="Digite seu e-mail"
@@ -49,6 +54,7 @@ function Register({ isOpen, onClose, onSubmit, onSwitchToLogin }) {
           id="register-password"
           className="popup__input"
           type="password"
+          autoComplete="new-password"
           value={password}
           onChange={(event) => setPassword(event.target.value)}
           placeholder="Crie uma senha"
@@ -62,6 +68,7 @@ function Register({ isOpen, onClose, onSubmit, onSwitchToLogin }) {
           id="register-name"
           className="popup__input"
           type="text"
+          autoComplete="name"
           value={name}
           onChange={(event) => setName(event.target.value)}
           placeholder="Digite seu nome"

@@ -1,15 +1,8 @@
 import { useEffect } from "react";
 import closeIcon from "../../assets/icons/popup/icon-close.svg";
-import "./PopupWithForm.css";
+import "../PopupWithForm/PopupWithForm.css";
 
-function PopupWithForm({
-  isOpen,
-  title,
-  onClose,
-  children,
-  footer,
-  containerClassName = "",
-}) {
+function AuthSuccess({ isOpen, onClose, onLoginClick }) {
   useEffect(() => {
     if (!isOpen) {
       return undefined;
@@ -41,10 +34,10 @@ function PopupWithForm({
   return (
     <div className="popup" onMouseDown={onOverlayClick} role="presentation">
       <div
-        className={`popup__container ${containerClassName}`.trim()}
+        className="popup__container popup__container_type_success"
         role="dialog"
         aria-modal="true"
-        aria-label={title}
+        aria-label="Cadastro concluído"
       >
         <button
           className="popup__close"
@@ -59,12 +52,21 @@ function PopupWithForm({
             aria-hidden="true"
           />
         </button>
-        <h2 className="popup__title">{title}</h2>
-        {children}
-        {footer}
+
+        <h2 className="popup__success-title">
+          Cadastro concluído com sucesso!
+        </h2>
+
+        <button
+          className="popup__success-link"
+          type="button"
+          onClick={onLoginClick}
+        >
+          Entrar
+        </button>
       </div>
     </div>
   );
 }
 
-export default PopupWithForm;
+export default AuthSuccess;

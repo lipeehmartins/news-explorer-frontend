@@ -1,12 +1,16 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import logoutIcon from "../../assets/icons/header/icon-logout.svg";
 import hamburgerIcon from "../../assets/icons/header/hamburguer-menu.svg";
 import closeIcon from "../../assets/icons/header/close-X.svg";
 import logoWhite from "../../assets/icons/header/logo-newsexplorer-white.svg";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
+import { DEFAULT_USER_NAME } from "../../utils/constants";
 import "./Navigation.css";
 
-function Navigation({ isLoggedIn, currentUserName, onLoginClick, onLogout }) {
+function Navigation({ isLoggedIn, onLoginClick, onLogout }) {
+  const currentUser = useContext(CurrentUserContext);
+  const currentUserName = currentUser?.name || DEFAULT_USER_NAME;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleToggleMenu = () => {
@@ -38,9 +42,9 @@ function Navigation({ isLoggedIn, currentUserName, onLoginClick, onLogout }) {
 
       <div className="navigation__desktop">
         <NavLink
-          className={({ isActive }) =>
-            `navigation__link ${isActive ? "navigation__link_state_active" : ""}`
-          }
+          className="navigation__link"
+          activeClassName="navigation__link_state_active"
+          exact
           to="/"
         >
           Início
@@ -48,9 +52,8 @@ function Navigation({ isLoggedIn, currentUserName, onLoginClick, onLogout }) {
 
         {isLoggedIn && (
           <NavLink
-            className={({ isActive }) =>
-              `navigation__link ${isActive ? "navigation__link_state_active" : ""}`
-            }
+            className="navigation__link"
+            activeClassName="navigation__link_state_active"
             to="/saved-news"
           >
             Artigos salvos
@@ -116,20 +119,19 @@ function Navigation({ isLoggedIn, currentUserName, onLoginClick, onLogout }) {
         </div>
 
         <NavLink
-          className={({ isActive }) =>
-            `navigation__link ${isActive ? "navigation__link_state_active" : ""}`
-          }
+          className="navigation__link"
+          activeClassName="navigation__link_state_active"
+          exact
           to="/"
           onClick={handleCloseMenu}
         >
-          Home
+          Início
         </NavLink>
 
         {isLoggedIn && (
           <NavLink
-            className={({ isActive }) =>
-              `navigation__link ${isActive ? "navigation__link_state_active" : ""}`
-            }
+            className="navigation__link"
+            activeClassName="navigation__link_state_active"
             to="/saved-news"
             onClick={handleCloseMenu}
           >
@@ -141,7 +143,10 @@ function Navigation({ isLoggedIn, currentUserName, onLoginClick, onLogout }) {
           <button
             className="navigation__button"
             type="button"
-            onClick={onLogout}
+            onClick={() => {
+              handleCloseMenu();
+              onLogout();
+            }}
           >
             <span>Sair ({currentUserName})</span>
             <img
@@ -154,7 +159,10 @@ function Navigation({ isLoggedIn, currentUserName, onLoginClick, onLogout }) {
           <button
             className="navigation__button"
             type="button"
-            onClick={onLoginClick}
+            onClick={() => {
+              handleCloseMenu();
+              onLoginClick();
+            }}
           >
             Entrar
           </button>

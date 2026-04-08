@@ -1,5 +1,5 @@
-import NewsCard from '../NewsCard/NewsCard';
-import './NewsCardList.css';
+import NewsCard from "../NewsCard/NewsCard";
+import "./NewsCardList.css";
 
 function NewsCardList({
   articles,
@@ -17,7 +17,13 @@ function NewsCardList({
     <section className="news-card-list" aria-label="Lista de notícias">
       <ul className="news-card-list__grid">
         {articles.map((article) => (
-          <li className="news-card-list__item" key={`${article.link}-${article.publishedAt}`}>
+          <li
+            className="news-card-list__item"
+            key={
+              article._id ||
+              `${article.link}-${article.publishedAt || article.date}`
+            }
+          >
             <NewsCard
               article={article}
               isSaved={savedUrlSet.has(article.link)}
@@ -30,8 +36,12 @@ function NewsCardList({
       </ul>
 
       {shouldShowMoreButton && (
-        <button className="news-card-list__more" type="button" onClick={onShowMore}>
-          Mostrar mais
+        <button
+          className="news-card-list__more"
+          type="button"
+          onClick={onShowMore}
+        >
+          <span className="news-card-list__more-text">Mostrar mais</span>
         </button>
       )}
     </section>

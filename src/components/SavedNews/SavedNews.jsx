@@ -1,14 +1,13 @@
-import Header from '../Header/Header';
-import SavedNewsHeader from '../SavedNewsHeader/SavedNewsHeader';
-import NewsCardList from '../NewsCardList/NewsCardList';
-import Footer from '../Footer/Footer';
-import './SavedNews.css';
+import Header from "../Header/Header";
+import SavedNewsHeader from "../SavedNewsHeader/SavedNewsHeader";
+import NewsCardList from "../NewsCardList/NewsCardList";
+import Footer from "../Footer/Footer";
+import "./SavedNews.css";
 
 function SavedNews({
   articles,
   onLoginClick,
   isLoggedIn,
-  currentUserName,
   onLogout,
   onToggleSaveArticle,
 }) {
@@ -16,15 +15,17 @@ function SavedNews({
     <>
       <Header
         isLoggedIn={isLoggedIn}
-        currentUserName={currentUserName}
         onLoginClick={onLoginClick}
         onLogout={onLogout}
       />
       <main className="saved-news">
-        <SavedNewsHeader currentUserName={currentUserName} articles={articles} />
+        <SavedNewsHeader articles={articles} />
 
         {articles.length > 0 ? (
-          <section className="saved-news__content" aria-label="Lista de artigos salvos">
+          <section
+            className="saved-news__content"
+            aria-label="Lista de artigos salvos"
+          >
             <NewsCardList
               articles={articles}
               allArticlesCount={articles.length}
@@ -36,7 +37,9 @@ function SavedNews({
             />
           </section>
         ) : (
-          <p className="saved-news__empty">Você ainda não salvou nenhum artigo.</p>
+          <p className="saved-news__empty">
+            Você ainda não salvou nenhum artigo.
+          </p>
         )}
       </main>
       <Footer />

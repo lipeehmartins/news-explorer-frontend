@@ -17,14 +17,32 @@
 
 .news-card-list__more {
   display: block;
-  margin: 48px auto 0;
+  margin: 64px auto 0;
   width: 288px;
-  min-height: 64px;
+  height: 64px;
   border-radius: 100px;
   border: 0;
-  background: #fff;
+  padding: 20px 90px;
+  box-sizing: border-box;
+  background: #e8e8e8;
+  color: #1a1b22;
+  font-family: "Roboto", Arial, sans-serif;
   font-size: 18px;
+  line-height: 24px;
+  font-weight: 500;
   cursor: pointer;
+}
+
+.news-card-list__more:hover {
+  opacity: 0.9;
+}
+
+.news-card-list__more-text {
+  width: 108px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @media (max-width: 1024px) {

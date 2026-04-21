@@ -95,18 +95,28 @@
 
   .navigation__link,
   .navigation__button {
+    font-family: "Roboto", Arial, sans-serif;
+    font-weight: 500;
     font-size: 16px;
     line-height: 24px;
+    text-align: center;
+    vertical-align: middle;
   }
 
   .navigation__link {
+    min-width: 64px;
+    width: auto;
+    height: 66px;
     min-height: 66px;
-    padding: 0;
+    padding: 0 16px;
+    box-sizing: border-box;
   }
 
   .navigation__button {
     width: 152px;
     height: 40px;
+    border-radius: 100px;
+    border-width: 1px;
   }
 }
 

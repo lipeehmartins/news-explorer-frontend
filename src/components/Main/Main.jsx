@@ -18,11 +18,11 @@ function Main({
   onShowMore,
   onLoginClick,
   isLoggedIn,
-  currentUserName,
   onLogout,
   onToggleSaveArticle,
   savedUrlSet,
 }) {
+  const hasResults = !isLoading && !requestError && allArticlesCount > 0;
   const isNotFound =
     hasSearched && !isLoading && !requestError && allArticlesCount === 0;
 
@@ -33,7 +33,6 @@ function Main({
           <Header
             isHome
             isLoggedIn={isLoggedIn}
-            currentUserName={currentUserName}
             onLoginClick={onLoginClick}
             onLogout={onLogout}
           />
@@ -53,9 +52,15 @@ function Main({
 
         {(hasSearched || isLoading) && (
           <section className="main__results" aria-label="Resultados da busca">
-            <h2 className="main__results-title">Procurar resultados</h2>
+            {hasResults && (
+              <h2 className="main__results-title">Procurar resultados</h2>
+            )}
 
-            {isLoading && <Preloader text="Buscando notícias..." />}
+            {isLoading && (
+              <div className="main__status">
+                <Preloader text="Procurando notícias..." />
+              </div>
+            )}
 
             {requestError && (
               <p className="main__feedback main__feedback_type_error">
@@ -63,9 +68,17 @@ function Main({
               </p>
             )}
 
-            {isNotFound && <p className="main__feedback">Nada encontrado</p>}
+            {isNotFound && (
+              <div className="main__status main__status_type_empty">
+                <span className="main__not-found-icon" aria-hidden="true" />
+                <h3 className="main__not-found-title">Nada encontrado</h3>
+                <p className="main__not-found-text">
+                  Desculpe, mas nada corresponde aos seus termos de pesquisa.
+                </p>
+              </div>
+            )}
 
-            {!isLoading && !requestError && allArticlesCount > 0 && (
+            {hasResults && (
               <NewsCardList
                 articles={articles}
                 allArticlesCount={allArticlesCount}

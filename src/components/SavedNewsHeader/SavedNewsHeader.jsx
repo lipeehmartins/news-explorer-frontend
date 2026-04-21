@@ -1,10 +1,13 @@
-import './SavedNewsHeader.css';
+import { useContext } from "react";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
+import { DEFAULT_USER_NAME } from "../../utils/constants";
+import "./SavedNewsHeader.css";
 
 function getKeywordsSummary(articles) {
   const map = new Map();
 
   articles.forEach((article) => {
-    const key = article.keyword || 'Sem palavra-chave';
+    const key = article.keyword || "Sem palavra-chave";
     map.set(key, (map.get(key) || 0) + 1);
   });
 
@@ -13,20 +16,26 @@ function getKeywordsSummary(articles) {
     .map((entry) => entry[0]);
 
   if (sortedKeys.length === 0) {
-    return 'Nenhuma palavra-chave ainda';
+    return "Nenhuma palavra-chave ainda";
   }
 
   if (sortedKeys.length <= 3) {
-    return sortedKeys.join(', ');
+    return sortedKeys.join(", ");
   }
 
   const remaining = sortedKeys.length - 2;
   return `${sortedKeys[0]}, ${sortedKeys[1]} e mais ${remaining}`;
 }
 
-function SavedNewsHeader({ currentUserName, articles }) {
+function SavedNewsHeader({ articles }) {
+  const currentUser = useContext(CurrentUserContext);
+  const currentUserName = currentUser?.name || DEFAULT_USER_NAME;
+
   return (
-    <section className="saved-news-header" aria-label="Resumo de artigos salvos">
+    <section
+      className="saved-news-header"
+      aria-label="Resumo de artigos salvos"
+    >
       <p className="saved-news-header__subtitle">Artigos salvos</p>
       <h1 className="saved-news-header__title">
         {currentUserName}, você tem {articles.length} artigo(s) salvo(s)

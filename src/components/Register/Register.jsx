@@ -1,24 +1,48 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import PopupWithForm from "../PopupWithForm/PopupWithForm";
+import useFormWithValidation from "../../hooks/useFormWithValidation";
 
-function Register({ isOpen, onClose, onSubmit, onSwitchToLogin }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
+const INITIAL_REGISTER_VALUES = {
+  email: "",
+  password: "",
+  name: "",
+};
+
+function Register({
+  isOpen,
+  onClose,
+  onSubmit,
+  onSwitchToLogin,
+  isLoading,
+  submitError,
+}) {
+  const { values, errors, isValid, handleChange, resetForm } =
+    useFormWithValidation(INITIAL_REGISTER_VALUES);
+
+  useEffect(() => {
+    if (isOpen) {
+      resetForm(INITIAL_REGISTER_VALUES, {}, false);
+    }
+  }, [isOpen, resetForm]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (!email || !password || !name) {
+    if (!isValid || isLoading) {
       return;
     }
-    onSubmit({ email, name });
+
+    onSubmit({
+      email: values.email,
+      password: values.password,
+      name: values.name,
+    });
   };
 
   return (
     <PopupWithForm
       isOpen={isOpen}
       onClose={onClose}
-      title="Cadastre-se"
+      title="Inscrever-se"
       footer={
         <p className="popup__footer-text">
           ou{" "}
@@ -27,7 +51,7 @@ function Register({ isOpen, onClose, onSubmit, onSwitchToLogin }) {
             type="button"
             onClick={onSwitchToLogin}
           >
-            Entrar
+            Entre
           </button>
         </p>
       }
@@ -37,48 +61,67 @@ function Register({ isOpen, onClose, onSubmit, onSwitchToLogin }) {
           E-mail
         </label>
         <input
+          name="email"
           id="register-email"
           className="popup__input"
           type="email"
           autoComplete="email"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          placeholder="Digite seu e-mail"
+          value={values.email || ""}
+          onChange={handleChange}
+          placeholder="Insira e-mail"
           required
         />
+        {errors.email && (
+          <span className="popup__input-error">{errors.email}</span>
+        )}
 
         <label className="popup__label" htmlFor="register-password">
           Senha
         </label>
         <input
+          name="password"
           id="register-password"
           className="popup__input"
           type="password"
           autoComplete="new-password"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-          placeholder="Crie uma senha"
+          value={values.password || ""}
+          onChange={handleChange}
+          placeholder="Insira a senha"
+          minLength={6}
           required
         />
+        {errors.password && (
+          <span className="popup__input-error">{errors.password}</span>
+        )}
 
         <label className="popup__label" htmlFor="register-name">
-          Nome
+          Nome de usuário
         </label>
         <input
+          name="name"
           id="register-name"
           className="popup__input"
           type="text"
           autoComplete="name"
-          value={name}
-          onChange={(event) => setName(event.target.value)}
-          placeholder="Digite seu nome"
+          value={values.name || ""}
+          onChange={handleChange}
+          placeholder="Insira seu nome de usuário"
           minLength={2}
           maxLength={30}
           required
         />
+        {errors.name && (
+          <span className="popup__input-error">{errors.name}</span>
+        )}
 
-        <button className="popup__submit" type="submit">
-          Cadastre-se
+        {submitError && <p className="popup__submit-error">{submitError}</p>}
+
+        <button
+          className="popup__submit"
+          type="submit"
+          disabled={!isValid || isLoading}
+        >
+          {isLoading ? "Enviando..." : "Inscrever-se"}
         </button>
       </form>
     </PopupWithForm>

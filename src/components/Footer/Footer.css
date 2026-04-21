@@ -1,28 +1,127 @@
 .footer {
-  border-top: 1px solid #d1d2d6;
-  padding: 24px 16px;
-  background: #fff;
+  width: 100%;
+  max-width: 1440px;
+  min-height: 80px;
+  margin: 0 auto;
+  padding: 0 104px;
+  box-sizing: border-box;
+  background: #f5f6f7;
   display: flex;
-  justify-content: space-between;
-  gap: 16px;
   align-items: center;
+  justify-content: space-between;
+  gap: 32px;
 }
 
 .footer__copyright {
   margin: 0;
-  color: #6d6f77;
-  font-size: 14px;
+  width: 433px;
+  max-width: 100%;
+  color: #b6bcbf;
+  font-family: "Roboto", Arial, sans-serif;
+  font-size: 18px;
+  line-height: 22px;
+  font-weight: 400;
+}
+
+.footer__right {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.footer__links {
+  display: flex;
+  align-items: center;
+  gap: 40px;
 }
 
 .footer__link {
-  color: #2f71e5;
-  font-size: 14px;
+  color: #1a1b22;
+  font-family: "Roboto", Arial, sans-serif;
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 400;
   text-decoration: none;
+}
+
+.footer__link:hover {
+  opacity: 0.75;
+}
+
+.footer__social {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.footer__social-link {
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  color: #1a1b22;
+}
+
+.footer__social-link:hover {
+  opacity: 0.75;
+}
+
+.footer__social-icon {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+@media (min-width: 701px) and (max-width: 1100px) {
+  .footer {
+    min-height: 64px;
+    padding: 0 40px;
+  }
+
+  .footer__copyright {
+    width: auto;
+    font-size: 16px;
+  }
+
+  .footer__right,
+  .footer__links {
+    gap: 24px;
+  }
 }
 
 @media (max-width: 700px) {
   .footer {
+    min-height: 176px;
+    padding: 20px 16px 22px;
+    gap: 28px;
+    align-items: stretch;
+    flex-direction: column-reverse;
+    justify-content: flex-start;
+  }
+
+  .footer__copyright {
+    width: 100%;
+    font-size: 16px;
+    line-height: 22px;
+  }
+
+  .footer__right {
+    width: 100%;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .footer__links {
     flex-direction: column;
     align-items: flex-start;
+    gap: 16px;
+  }
+
+  .footer__link {
+    font-size: 18px;
+    line-height: 24px;
   }
 }

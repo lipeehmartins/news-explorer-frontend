@@ -1,6 +1,13 @@
 import { getDateRangeFromLastWeek } from "./date";
 
+const DEFAULT_BACKEND_API_BASE_URL = import.meta.env.PROD
+  ? "https://news-explorer-backend-xu1z.onrender.com/api"
+  : "http://localhost:3000/api";
 const DEFAULT_NEWS_API_BASE_URL = "https://newsapi.org";
+
+const configuredBackendBaseUrl =
+  import.meta.env.VITE_API_BASE_URL || DEFAULT_BACKEND_API_BASE_URL;
+const NEWS_PROXY_BASE_URL = configuredBackendBaseUrl.replace(/\/+$/, "");
 
 const normalizeNewsApiBaseUrl = (rawBaseUrl) => {
   const withoutTrailingSlashes = rawBaseUrl.replace(/\/+$/, "");
@@ -16,10 +23,12 @@ const normalizeNewsApiBaseUrl = (rawBaseUrl) => {
   return `${withoutTrailingSlashes}/v2`;
 };
 
-const configuredBaseUrl =
+const configuredNewsBaseUrl =
   import.meta.env.VITE_NEWS_API_BASE_URL || DEFAULT_NEWS_API_BASE_URL;
-const NEWS_API_BASE_URL = normalizeNewsApiBaseUrl(configuredBaseUrl);
+const NEWS_API_BASE_URL = normalizeNewsApiBaseUrl(configuredNewsBaseUrl);
 const NEWS_API_KEY = (import.meta.env.VITE_NEWS_API_KEY || "").trim();
+
+const IS_PROD = import.meta.env.PROD;
 
 const checkResponse = async (response) => {
   if (!response.ok) {
@@ -28,10 +37,7 @@ const checkResponse = async (response) => {
     try {
       const data = await response.json();
 
-      if (data?.code === "apiKeyMissing") {
-        message =
-          "A chave da News API não está configurada. Defina VITE_NEWS_API_KEY no ambiente.";
-      } else if (data?.message) {
+      if (data?.message) {
         message = data.message;
       }
     } catch {
@@ -55,15 +61,29 @@ const normalizeArticle = (article, keyword) => ({
 });
 
 export const searchNews = (keyword) => {
+  const { from, to } = getDateRangeFromLastWeek();
+
+  if (IS_PROD) {
+    const query = new URLSearchParams({
+      q: keyword,
+      from,
+      to,
+      pageSize: "100",
+    });
+
+    return fetch(`${NEWS_PROXY_BASE_URL}/news?${query.toString()}`)
+      .then(checkResponse)
+      .then((data) => data.articles || []);
+  }
+
   if (!NEWS_API_KEY) {
     return Promise.reject(
       new Error(
-        "A chave da News API não está configurada. Defina VITE_NEWS_API_KEY no ambiente.",
+        "A chave da News API não está configurada para desenvolvimento. Defina VITE_NEWS_API_KEY no frontend.",
       ),
     );
   }
 
-  const { from, to } = getDateRangeFromLastWeek();
   const query = new URLSearchParams({
     q: keyword,
     apiKey: NEWS_API_KEY,
@@ -75,8 +95,6 @@ export const searchNews = (keyword) => {
   return fetch(`${NEWS_API_BASE_URL}/everything?${query.toString()}`)
     .then(checkResponse)
     .then((data) =>
-      (data.articles || []).map((article) =>
-        normalizeArticle(article, keyword),
-      ),
+      (data.articles || []).map((article) => normalizeArticle(article, keyword)),
     );
 };

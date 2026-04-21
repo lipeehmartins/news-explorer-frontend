@@ -22,6 +22,10 @@ Interface web do projeto Full-Stack News Explorer.
 - VITE_NEWS_API_KEY
 - VITE_NEWS_API_BASE_URL
 
+Valores sugeridos para VITE_NEWS_API_BASE_URL:
+
+- https://newsapi.org
+
 ## Tecnologias
 
 - React

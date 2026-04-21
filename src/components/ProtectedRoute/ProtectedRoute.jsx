@@ -9,11 +9,21 @@ function UnauthorizedRedirect({ onUnauthorized }) {
   return <Redirect to="/" />;
 }
 
-function ProtectedRoute({ children, isLoggedIn, onUnauthorized, ...rest }) {
+function ProtectedRoute({
+  children,
+  isLoggedIn,
+  isAuthChecked,
+  onUnauthorized,
+  ...rest
+}) {
   return (
     <Route
       {...rest}
       render={(props) => {
+        if (!isAuthChecked) {
+          return null;
+        }
+
         if (!isLoggedIn) {
           return <UnauthorizedRedirect onUnauthorized={onUnauthorized} />;
         }

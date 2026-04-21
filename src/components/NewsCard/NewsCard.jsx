@@ -12,13 +12,21 @@ function NewsCard({
   const description =
     article.description || article.text || "Sem descrição disponível.";
   const saveButtonText = isSavedPage ? "Remover artigo salvo" : "Salvar artigo";
+  const showAuthTooltip = !isLoggedIn && !isSavedPage;
+  const showDeleteTooltip = isLoggedIn && isSavedPage;
+  const hoverTooltipText = showAuthTooltip
+    ? "Faça o login para salvar os artigos."
+    : showDeleteTooltip
+      ? "Remover dos salvos"
+      : "";
+  const shouldShowKeyword = isSavedPage && Boolean(article.keyword);
   const saveButtonClassName = `news-card__action ${
     isSaved ? "news-card__action_state_saved" : ""
   } ${isSavedPage ? "news-card__action_type_delete" : "news-card__action_type_bookmark"}`;
 
   return (
     <article className="news-card">
-      {article.keyword && (
+      {shouldShowKeyword && (
         <span className="news-card__keyword">{article.keyword}</span>
       )}
 
@@ -37,23 +45,30 @@ function NewsCard({
           />
         </a>
 
-        <button
-          className={saveButtonClassName}
-          type="button"
-          aria-label={saveButtonText}
-          title={
-            !isLoggedIn && !isSavedPage
-              ? "Faça o login para salvar os artigos."
-              : saveButtonText
-          }
-          onClick={() => onToggleSave(article)}
-        >
-          {isSavedPage ? (
-            "🗑"
-          ) : (
-            <span className="news-card__bookmark-icon" aria-hidden="true" />
+        <div className="news-card__action-group">
+          {hoverTooltipText && (
+            <span
+              className={`news-card__hover-tip ${
+                showDeleteTooltip ? "news-card__hover-tip_type_delete" : ""
+              }`.trim()}
+            >
+              {hoverTooltipText}
+            </span>
           )}
-        </button>
+
+          <button
+            className={saveButtonClassName}
+            type="button"
+            aria-label={saveButtonText}
+            onClick={() => onToggleSave(article)}
+          >
+            {isSavedPage ? (
+              <span className="news-card__delete-icon" aria-hidden="true" />
+            ) : (
+              <span className="news-card__bookmark-icon" aria-hidden="true" />
+            )}
+          </button>
+        </div>
       </div>
 
       <div className="news-card__content">

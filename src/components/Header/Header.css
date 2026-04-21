@@ -43,6 +43,21 @@
     height: 66px;
     padding: 0 40px;
   }
+
+  .header__logo {
+    width: 200px;
+    height: 24px;
+    font-family: "Roboto Slab", "Times New Roman", serif;
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 700;
+    vertical-align: middle;
+  }
+
+  .header__logo-text {
+    width: 200px;
+    height: 24px;
+  }
 }
 
 @media (max-width: 700px) {

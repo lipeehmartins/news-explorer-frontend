@@ -12,6 +12,7 @@ function Header({ isHome = false, isLoggedIn, onLoginClick, onLogout }) {
         <img className="header__logo-circle" src={logoCircle} alt="N" />
       </Link>
       <Navigation
+        isHome={isHome}
         isLoggedIn={isLoggedIn}
         onLoginClick={onLoginClick}
         onLogout={onLogout}

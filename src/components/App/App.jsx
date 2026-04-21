@@ -4,7 +4,6 @@ import Main from "../Main/Main";
 import SavedNews from "../SavedNews/SavedNews";
 import Login from "../Login/Login";
 import Register from "../Register/Register";
-import AuthSuccess from "../AuthSuccess/AuthSuccess";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import {
@@ -81,6 +80,9 @@ function App() {
   const [isAuthLoading, setIsAuthLoading] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
+  const [isSessionChecked, setIsSessionChecked] = useState(
+    () => !localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY),
+  );
 
   useEffect(() => {
     const payload = {
@@ -112,12 +114,16 @@ function App() {
       return;
     }
 
-    restoreSession(token).catch(() => {
-      localStorage.removeItem(LOCAL_STORAGE_TOKEN_KEY);
-      setIsLoggedIn(false);
-      setCurrentUser(null);
-      setSavedArticles([]);
-    });
+    restoreSession(token)
+      .catch(() => {
+        localStorage.removeItem(LOCAL_STORAGE_TOKEN_KEY);
+        setIsLoggedIn(false);
+        setCurrentUser(null);
+        setSavedArticles([]);
+      })
+      .finally(() => {
+        setIsSessionChecked(true);
+      });
   }, [restoreSession]);
 
   const savedArticleMap = useMemo(
@@ -163,11 +169,6 @@ function App() {
     setActiveModal("register");
   };
 
-  const openSuccessModal = () => {
-    setAuthError("");
-    setActiveModal("success");
-  };
-
   const closeModal = () => {
     setAuthError("");
     setActiveModal("");
@@ -199,7 +200,7 @@ function App() {
 
     register(values)
       .then(() => {
-        openSuccessModal();
+        openLoginModal();
       })
       .catch((error) => {
         const conflictMessage = (error.message || "").toLowerCase();
@@ -296,6 +297,7 @@ function App() {
           <ProtectedRoute
             path="/saved-news"
             isLoggedIn={isLoggedIn}
+            isAuthChecked={isSessionChecked}
             onUnauthorized={openLoginModal}
           >
             <SavedNews
@@ -327,12 +329,6 @@ function App() {
           onSwitchToLogin={openLoginModal}
           isLoading={isAuthLoading}
           submitError={authError}
-        />
-
-        <AuthSuccess
-          isOpen={activeModal === "success"}
-          onClose={closeModal}
-          onLoginClick={openLoginModal}
         />
       </div>
     </CurrentUserContext.Provider>

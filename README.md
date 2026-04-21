@@ -20,16 +20,12 @@ Interface web do projeto Full-Stack News Explorer.
 ## Variáveis de ambiente
 
 - VITE_API_BASE_URL
-- VITE_NEWS_API_KEY
-- VITE_NEWS_API_BASE_URL
+- VITE_NEWS_API_KEY (apenas desenvolvimento local)
+- VITE_NEWS_API_BASE_URL (opcional, padrão: https://newsapi.org, apenas desenvolvimento local)
 
 Valor sugerido para VITE_API_BASE_URL:
 
 - https://news-explorer-backend-xu1z.onrender.com/api
-
-Valores sugeridos para VITE_NEWS_API_BASE_URL:
-
-- https://newsapi.org
 
 ## Tecnologias
 

@@ -19,7 +19,7 @@ const normalizeNewsApiBaseUrl = (rawBaseUrl) => {
 const configuredBaseUrl =
   import.meta.env.VITE_NEWS_API_BASE_URL || DEFAULT_NEWS_API_BASE_URL;
 const NEWS_API_BASE_URL = normalizeNewsApiBaseUrl(configuredBaseUrl);
-const NEWS_API_KEY = import.meta.env.VITE_NEWS_API_KEY;
+const NEWS_API_KEY = (import.meta.env.VITE_NEWS_API_KEY || "").trim();
 
 const checkResponse = async (response) => {
   if (!response.ok) {
@@ -55,10 +55,18 @@ const normalizeArticle = (article, keyword) => ({
 });
 
 export const searchNews = (keyword) => {
+  if (!NEWS_API_KEY) {
+    return Promise.reject(
+      new Error(
+        "A chave da News API não está configurada. Defina VITE_NEWS_API_KEY no ambiente.",
+      ),
+    );
+  }
+
   const { from, to } = getDateRangeFromLastWeek();
   const query = new URLSearchParams({
     q: keyword,
-    apiKey: NEWS_API_KEY || "",
+    apiKey: NEWS_API_KEY,
     from,
     to,
     pageSize: "100",

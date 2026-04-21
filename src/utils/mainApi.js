@@ -1,5 +1,10 @@
-const BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || "http://localhost:3000/api";
+const DEFAULT_API_BASE_URL = import.meta.env.PROD
+  ? "https://news-explorer-backend-xu1z.onrender.com/api"
+  : "http://localhost:3000/api";
+
+const configuredBaseUrl =
+  import.meta.env.VITE_API_BASE_URL || DEFAULT_API_BASE_URL;
+const BASE_URL = configuredBaseUrl.replace(/\/+$/, "");
 
 const checkResponse = async (response) => {
   if (response.ok) {
